@@ -1,49 +1,64 @@
-import jwt  from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 import { CustomJwtPayload } from "../types/jwt.types";
 import { Response, NextFunction } from "express";
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 import User from "../models/user.model";
 import { CustomRequset } from "../types/req.types";
 dotenv.config();
 
-const Authorization = async (req: CustomRequset, res: Response, next:NextFunction) => {
-    try{
-        const token = req.cookies.token;
+const Authorization = async (
+  req: CustomRequset,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const token = req.cookies.jwt;
 
-        if(!token){
-          return  res.status(401).json({
-                message: "Unauthorized User ! No token provided"
-            })
-        }
+    console.log("Token", token);
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as CustomJwtPayload;
-
-        if(!decoded){
-           return res.status(401).json({
-                message: "Unauthorized User ! Invalid token"
-            });
-        }
-
-        const userId = decoded.userId;
-
-        const UserExists = await User.findOne({userId}).select("-password");
-
-        if(!UserExists){
-            return res.status(401).json({
-                message: "Unauthorized User ! User does not exist"
-            });
-        }
-
-        req.user  = UserExists;
-
-        next();
+    if (token === undefined) {
+      return res.status(401).json({
+        error: "Unauthorized User ! No token provided",
+      });
     }
-    catch(error){
-        console.log("Error while authenticating user");
-        res.status(500).json({
-            message: "Internal Server Error"
-        });
+
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({
+        error: "jwt secret not found in .env file",
+      });
     }
-}
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    ) as CustomJwtPayload;
+
+    if (!decoded) {
+      return res.status(401).json({
+        message: "Unauthorized User ! Invalid token",
+      });
+    }
+
+    const userId = decoded.userId;
+    console.log(userId);
+    const UserExists = await User.findOne({ _id: userId }).select("-password");
+
+    if (!UserExists) {
+      return res.status(401).json({
+        message: "Unauthorized User ! User does not exist",
+      });
+    }
+
+    // @ts-ignore
+    req.user = UserExists;
+
+    next();
+  } catch (error) {
+    console.log("Error while authenticating user");
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
 
 export default Authorization;
