@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon backend/apps/server.js",
+    "start": "tsc backend/server.ts && node backend/server.js",
     "server": "nodemon backend/apps/server.ts",
-    "dserver": "nodemon --watch './backend/**/*.ts' --exec ts-node ./backend/apps/server.ts"
+    "dserver": "nodemon --watch './backend/**/*.ts' --exec ts-node ./backend/apps/server.ts",
+    "build": " npm install && npm install --prefix chat-app && npm run build --prefix chat-app"
   },
   "keywords": [],
   "author": "",
