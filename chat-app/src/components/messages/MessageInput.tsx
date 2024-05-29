@@ -11,7 +11,7 @@ const MessageInput = () => {
     e.preventDefault();
 
     if (message.trim() === "") {
-      toast.error("Message cannot be empty");
+     return toast.error("Message cannot be empty");
     }
 
     await sendMessage(message);

@@ -27,7 +27,7 @@ const UseLogout = (): {
       }
 
       localStorage.removeItem("chat-user");
-      if (setAuthUser)
+      if (setAuthUser !== null && setAuthUser !== undefined)
         setAuthUser({
           fullName: "",
           userName: "",

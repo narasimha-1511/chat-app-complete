@@ -12,6 +12,11 @@ const useSendMessage = (): {
   const sendMessage = async (message: string): Promise<void> => {
     setLoading(true);
     try {
+
+      if (message.trim() === "") {
+        throw new Error("Message cannot be empty");
+      }
+
       const response = await fetch(
         `/messages/send/${selectedConversation._id}`,
         {
