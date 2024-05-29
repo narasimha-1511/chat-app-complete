@@ -17,8 +17,6 @@ const SignUp = () => {
   const HandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await signup(inputs);
-    // console.log(inputs);
-    //add the signup logic here
   };
 
   const handleCheckboxChange = (gender: string) => {

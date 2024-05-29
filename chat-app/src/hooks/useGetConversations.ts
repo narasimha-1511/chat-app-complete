@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
+
 const useGetConversations = (): {
   loading: boolean;
   conversations: any[];
@@ -12,19 +13,17 @@ const useGetConversations = (): {
     setLoading(true); // Set loading to true when the effect starts
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:4000/users/", {
+        const res = await fetch("/users/", {
           method: "GET",
           credentials: "include",
         });
         const data = await res.json();
 
-        console.log("Data from http://localhost:4000/users/", data);
-
         if (data.error) {
           throw new Error(data.error);
         }
 
-        setConversations(data);
+        setConversations(data.users);
       } catch (error) {
         toast.error(error.message);
       } finally {

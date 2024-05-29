@@ -40,7 +40,7 @@ const useSignUp = (): {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:4000/auth/signup", {
+      const res = await fetch("/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,9 +55,7 @@ const useSignUp = (): {
       });
 
       const data = await res.json();
-      // console.log(data);
 
-      console.log(data);
       if (data.error) {
         throw new Error(data.error);
       }
@@ -65,7 +63,7 @@ const useSignUp = (): {
       //local storage
       localStorage.setItem("chat-user", JSON.stringify(data));
       if (setAuthUser) setAuthUser(data);
-      else console.log("setAuthUser is not defined");
+      else console.error("setAuthUser is not defined");
 
       // Update the authUser state in the context
 

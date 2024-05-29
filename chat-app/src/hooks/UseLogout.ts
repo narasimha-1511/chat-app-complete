@@ -13,7 +13,7 @@ const UseLogout = (): {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:4000/auth/logout", {
+      const res = await fetch("/auth/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +35,7 @@ const UseLogout = (): {
           profilePic: "",
         });
     } catch (err) {
-      console.log("Error while using the logout hook", err);
+      console.error("Error while using the logout hook", err);
     } finally {
       setLoading(false);
     }
