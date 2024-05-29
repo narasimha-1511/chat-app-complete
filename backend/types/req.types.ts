@@ -1,6 +1,3 @@
-import { Request } from 'express';
-import User from '../models/user.model';
+import { Request } from "express";
 
-export type CustomRequset = Request & {
-    user : any
-}
+export type CustomRequset = Request & {};
