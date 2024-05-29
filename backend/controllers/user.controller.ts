@@ -9,14 +9,9 @@ export default class UserController {
           // @ts-ignore
           const loggedInUserId = req.user._id;
 
-          console.log("Logged in User ID", loggedInUserId);
-          console.log("data requested")
-
           const filteredUsers = await User.find({
             _id: { $ne: loggedInUserId },
           }).select("-password");
-
-          console.log("Filtered Users", filteredUsers);
 
           res.status(200).json({
             users: filteredUsers,

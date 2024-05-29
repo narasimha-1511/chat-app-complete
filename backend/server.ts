@@ -4,6 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+import { app, server } from "./socket/socket";
 
 import authRoutes from "./routes/auth.routes";
 import messageRoutes from "./routes/messages.rotues";
@@ -13,7 +14,6 @@ import connectToMongo from "./db/connectToMongo";
 import { IDatabase } from "./interfaces";
 
 dotenv.config();
-const app = Express();
 const __dirnamee = path.resolve();
 
 app.use(cors());
@@ -30,7 +30,7 @@ app.get("*", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirnamee, "chat-app", "dist", "index.html"));
 });
 
-app.listen(process.env.PORT, async () => {
+server.listen(process.env.PORT, async () => {
   await connectToMongo();
   console.log(`Server is running on port ${process.env.PORT}`);
 });

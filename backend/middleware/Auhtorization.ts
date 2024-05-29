@@ -14,8 +14,6 @@ const Authorization = async (
   try {
     const token = req.cookies.jwt;
 
-    console.log("Token", token);
-
     if (token === undefined) {
       return res.status(401).json({
         error: "Unauthorized User ! No token provided",
@@ -40,7 +38,6 @@ const Authorization = async (
     }
 
     const userId = decoded.userId;
-    console.log(userId);
     const UserExists = await User.findOne({ _id: userId }).select("-password");
 
     if (!UserExists) {
@@ -54,7 +51,7 @@ const Authorization = async (
 
     next();
   } catch (error) {
-    console.log("Error while authenticating user");
+    console.error("Error while authenticating user");
     res.status(500).json({
       message: "Internal Server Error",
     });
