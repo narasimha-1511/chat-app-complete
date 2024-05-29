@@ -44,8 +44,8 @@ export default class MessageController{
             await Promise.all([newMessage.save(), conversation.save()]); // this will run parallely and save time
 
             res.status(201).json({
-                newMessage
-            })
+              message: newMessage,
+            });
 
         }
         catch(error){
@@ -75,9 +75,9 @@ export default class MessageController{
                 return res.status(404).json([])
             }
 
-            res.status(200).json({
-                conversation
-            })
+            const messagges = conversation.messages;
+
+            res.status(200).json(messagges);
 
         }catch(error){
             console.log("Error in the getMessages controller" , error);
