@@ -41,7 +41,7 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({
   useEffect(() => {
     if (authUser?.fullName !== "" && authUser?._id !== undefined) {
       try {
-        const socket = io("http://localhost:4000", {
+        const socket = io("https://chat-app-prod-zvet.onrender.com/", {
           query: {
             userId: authUser._id,
           },
