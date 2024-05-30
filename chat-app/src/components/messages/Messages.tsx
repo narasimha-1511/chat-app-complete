@@ -2,9 +2,11 @@ import Message from "./Message";
 import React, { useEffect, useRef } from "react";
 import useGetMessage from "../../hooks/useGetMessage";
 import MessageSkeleton from "./../skeletons/MessageSkeleton";
+import useListenMessages from "../../hooks/useListenMessages";
 
 const Messages = () => {
   const { loading, messages } = useGetMessage();
+  useListenMessages();
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
 
   //make the message stype safe
