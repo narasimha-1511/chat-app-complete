@@ -54,6 +54,11 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({
           setOnlineUsers(users);
         });
 
+        socket.on("newUserRegistered", (data) => {
+          console.log("new user registered", data);
+          toast.success(`${data.fullName} has joined the chat`);
+        });
+
         return () => {
           socket.close();
         };

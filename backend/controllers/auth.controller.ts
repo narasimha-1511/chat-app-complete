@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/user.model";
 const bcrypt = require("bcryptjs");
 import generateTokenAndSetCookie from "../utils/generateJWT";
+import { io } from "../socket/socket";
 
 export default class AuthController {
   static async login(req: Request, res: Response) {
@@ -83,6 +84,7 @@ export default class AuthController {
 
       if (newUser) {
         generateTokenAndSetCookie(newUser.id, res);
+        io.emit("newUserRegistered", newUser);
 
         res.status(201).json({
           _id: newUser.id,

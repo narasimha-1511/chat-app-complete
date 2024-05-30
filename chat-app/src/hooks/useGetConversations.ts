@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
+import { useSocketContext } from "./../context/SocketContext";
 
 const useGetConversations = (): {
   loading: boolean;
   conversations: any[];
 } => {
+  const [rerender, rederening] = useState<number>(1);
   const [loading, setLoading] = useState(false);
   const [conversations, setConversations] = useState([]);
+
+  const { socket } = useSocketContext();
+
+  useEffect(() => {
+    socket?.on("newUserRegistered", () => {
+      rederening((prev) => prev + 1);
+    });
+  }, [socket]);
 
   useEffect(() => {
     setLoading(true); // Set loading to true when the effect starts
@@ -32,7 +41,7 @@ const useGetConversations = (): {
     };
 
     fetchData(); // Call the async function directly
-  }, []); // Empty dependency array ensures this effect runs only once
+  }, [rerender]); // Empty dependency array ensures this effect runs only once
 
   return { loading, conversations };
 };
