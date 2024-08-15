@@ -23,7 +23,7 @@ const Login = () => {
         <form>
           <div>
             <label className="label p-2">
-              <span className="text-base label-text">Username</span>
+              <span className="text-base label-text text-white">Username</span>
             </label>
             <input
               type="text"
@@ -35,7 +35,7 @@ const Login = () => {
           </div>
           <div>
             <label className="label">
-              <span className="text-base label-text">Password</span>
+              <span className="text-base label-text text-white">Password</span>
             </label>
             <input
               type="password"
@@ -47,7 +47,7 @@ const Login = () => {
           </div>
           <Link
             to={"/signup"}
-            className="cursor-pointer text-sm  hover:underline hover:text-blue-600 mt-2"
+            className="cursor-pointer text-sm text-white hover:underline hover:text-blue-600 mt-2"
           >
             {"Don't"} have an account?
           </Link>
